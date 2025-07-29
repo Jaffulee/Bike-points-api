@@ -28,7 +28,12 @@ def extract_bike_files():
 
             for outerdict in data:
                 for innerdict in outerdict['additionalProperties']:
-                    dates.append(datetime.strptime(innerdict['modified'],'%Y-%m-%dT%H:%M:%S.%fZ'))
+                    try:
+                        dateval = datetime.strptime(innerdict['modified'],'%Y-%m-%dT%H:%M:%S.%fZ')
+                    except:
+                        dateval = datetime.strptime(innerdict['modified'],'%Y-%m-%dT%H:%M:%SZ')
+                    if dateval:
+                        dates.append(dateval)
             max_date = max(dates)
             now_date = datetime.now()
             stale_days = (now_date-max_date).days
@@ -65,3 +70,4 @@ def extract_bike_files():
 
 if __name__ == '__main__':
     extract_bike_files()
+
