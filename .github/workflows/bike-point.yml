@@ -6,10 +6,9 @@ name: Bike Point Ingestion
 # or or will aslo run every hour
 on:
   schedule:
+
     - cron: '0 * * * *'
   workflow_dispatch:
-
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
@@ -18,11 +17,13 @@ jobs:
     steps:
       - name: Checkout the repo #any commits during the run won't interfere
         uses: actions/checkout@v2
+
         
       - name: setup python # make sure python version Github uses is the same we chose
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
 
       - name: install packages # Install required dependencies to allow the script to run
         run: pip install -r requirements.txt
@@ -33,5 +34,4 @@ jobs:
           Secret_access_key: ${{secrets.Secret_access_key}}
           AWS_BUCKET_NAME: ${{secrets.AWS_BUCKET_NAME}}
         run: python main.py
-        
-      
+

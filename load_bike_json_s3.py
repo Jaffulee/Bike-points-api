@@ -29,21 +29,22 @@ def load_bike_json():
         region_name = 'eu-north-1'
     )
     for filename in filenames:
-        try:
-            # filepath = os.path.join(filepath_base,filename)
-            # s3_path = os.path.join(s3filepath_base,filename)
-            filepath = filepath_base + '/' + filename
-            s3_path = s3filepath_base + '/' + filename
-            print(filepath,s3_path)
-            s3_client.upload_file(
-                Filename=filepath,   # local path
-                Bucket=api_keys['AWS_BUCKET_NAME'],             # target bucket
-                Key=s3_path,# object key (path in bucket)
-            )
-            os.remove(filepath)
-            print("Upload succeeded")
-        except ClientError as err:
-            print(f"Upload failed: {err}")
+        if filename.endswith('.json'):
+            try:
+                # filepath = os.path.join(filepath_base,filename)
+                # s3_path = os.path.join(s3filepath_base,filename)
+                filepath = filepath_base + '/' + filename
+                s3_path = s3filepath_base + '/' + filename
+                print(filepath,s3_path)
+                s3_client.upload_file(
+                    Filename=filepath,   # local path
+                    Bucket=api_keys['AWS_BUCKET_NAME'],             # target bucket
+                    Key=s3_path,# object key (path in bucket)
+                )
+                os.remove(filepath)
+                print("Upload succeeded")
+            except ClientError as err:
+                print(f"Upload failed: {err}")
 
 
     print(s3_client)
