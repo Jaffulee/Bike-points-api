@@ -1,0 +1,37 @@
+# This is a basic workflow that is manually triggered
+
+name: Bike Point Ingestion
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or or will aslo run every hour
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: Bike Point Environment Deng3
+    steps:
+      - name: Checkout the repo #any commits during the run won't interfere
+        uses: actions/checkout@v2
+        
+      - name: setup python # make sure python version Github uses is the same we chose
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: install packages # Install required dependencies to allow the script to run
+        run: pip install -r requirements.txt
+
+      - name: run python script # Make .env and run script
+        env:
+          Access_key_ID: ${{secrets.Access_key_ID}}
+          Secret_access_key: ${{secrets.Secret_access_key}}
+          AWS_BUCKET_NAME: ${{secrets.AWS_BUCKET_NAME}}
+        run: python main.py
+        
+      
