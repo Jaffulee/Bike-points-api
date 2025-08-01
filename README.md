@@ -18,3 +18,5 @@ It performs two main actions:
   Secret_access_key="your_aws_secret_key"
   AWS_BUCKET_NAME="your_target_bucket_name"
   ```
+
+Also contains proof of concept orchestration scripts, and an example sql silver layer script
