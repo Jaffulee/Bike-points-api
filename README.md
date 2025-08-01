@@ -19,4 +19,4 @@ It performs two main actions:
   AWS_BUCKET_NAME="your_target_bucket_name"
   ```
 
-Also contains proof of concept orchestration scripts, and an example sql silver layer script
+Also contains proof of concept orchestration scripts, and an example sql silver layer script. Note that the Kestra script uses unencrypted KV stores, which is not best practise - treat this as an exercise in demonstrating the conceptual approach to orchestrating a Python script.
