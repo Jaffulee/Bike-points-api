@@ -1,3 +1,4 @@
+#yml for Kestra
 id: beeikepoint_github_action_refactor
 namespace: beeikpoint_api
 
@@ -19,6 +20,7 @@ tasks:
           - pip install -r requirements.txt
         commands:
           - python main.py
+        # WARNING: this has some security concerns - read the README
         env:
           Access_key_ID: "{{ kv('Access_key_ID') }}"
           Secret_access_key: "{{ kv('Secret_access_key') }}"
