@@ -1,0 +1,25 @@
+id: beeikepoint_github_action_refactor
+namespace: beeikpoint_api
+
+tasks:
+  - id: python_scripts
+    type: io.kestra.plugin.core.flow.WorkingDirectory
+    tasks:
+      - id: clone_repository
+        type: io.kestra.plugin.git.Clone
+        url: https://github.com/Jaffulee/Bike-points-api
+        branch: main
+
+      - id: run_python_script
+        type: io.kestra.plugin.scripts.python.Commands
+        taskRunner:
+          type: io.kestra.plugin.scripts.runner.docker.Docker
+        containerImage: python:3.11-slim #shady
+        beforeCommands:
+          - pip install -r requirements.txt
+        commands:
+          - python main.py
+        env:
+          Access_key_ID: "{{ kv('Access_key_ID') }}"
+          Secret_access_key: "{{ kv('Secret_access_key') }}"
+          AWS_BUCKET_NAME: "{{ kv('AWS_BUCKET_NAME') }}"
